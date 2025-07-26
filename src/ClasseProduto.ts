@@ -21,6 +21,13 @@ export abstract class Produto {
         return this.tipo;
     }
 
+    static mostrarOpcoes(opcoes: string[]): void {
+        console.log("Opções disponíveis:");
+        opcoes.forEach((opcao, index) => {
+            console.log(`${index + 1}. ${opcao}`);
+        });
+    }
+    
     abstract calcularPreco(): number;
     abstract getInfo(): string;
 }

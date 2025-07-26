@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Carrinho de Compras</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+    }
+    .produto {
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Carrinho de Compras</h1>
+
+  <div>
+    <label>Tipo:
+      <select id="tipo">
+        <option value="Lanche">Lanche</option>
+        <option value="Bebida">Bebida</option>
+        <option value="Sobremesa">Sobremesa</option>
+      </select>
+    </label>
+    <br>
+    <label id="nome-produto">Nome: <input type="text" id="nome" /></label>
+    <br>
+    <label id="preco-produto">Preço: <input type="number" id="preco" /></label>
+    <br>
+    <label id="extra-label"></label>
+    <input type="text" id="extra" style="display:none;" />
+    <br>
+    <button onclick="adicionarProduto()">Adicionar Produto</button>
+  </div>
+
+  <h2>Produtos no Carrinho</h2>
+  <ul id="lista-produtos"></ul>
+
+  <h3 id="total">Total: R$ 0.00</h3>
+
+  <script type="module" src="dist/index.js"></script>
+</body>
+</html>

@@ -10,4 +10,7 @@ export class Bebida extends Produto {
     getInfo() {
         return `Bebida - ${this.volume}L`;
     }
+    static mostrarTiposDisponiveis() {
+        Produto.mostrarOpcoes(["Refrigerante", "Suco", "Água"]);
+    }
 }

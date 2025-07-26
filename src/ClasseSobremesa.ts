@@ -15,4 +15,8 @@ export class Sobremesa extends Produto {
     public getInfo(): string {
         return `Sobremesa - Sabor: ${this.sabor}`;
     }
+
+    public static mostrarSaboresDisponiveis(): void {
+        Produto.mostrarOpcoes(["Chocolate", "Morango", "Baunilha"]);
+    }
 }

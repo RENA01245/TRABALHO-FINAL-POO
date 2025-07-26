@@ -12,7 +12,12 @@ export class Bebida extends Produto {
         return this.preco - (this.preco * 0.1);
     }
 
+
     public getInfo(): string {
         return `Bebida - ${this.volume}L`;
+    }
+
+    public static mostrarTiposDisponiveis(): void {
+        Produto.mostrarOpcoes(["Refrigerante", "Suco", "Água"]);
     }
 }

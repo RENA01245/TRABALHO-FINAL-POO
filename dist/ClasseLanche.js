@@ -9,4 +9,7 @@ export class Lanche extends Produto {
     getInfo() {
         return `Lanche`;
     }
+    static mostrarTiposDisponiveis() {
+        Produto.mostrarOpcoes(["Hambúrguer", "Sanduíche", "Wrap"]);
+    }
 }

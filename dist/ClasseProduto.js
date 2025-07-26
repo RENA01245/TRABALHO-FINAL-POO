@@ -13,4 +13,10 @@ export class Produto {
     getTipo() {
         return this.tipo;
     }
+    static mostrarOpcoes(opcoes) {
+        console.log("Opções disponíveis:");
+        opcoes.forEach((opcao, index) => {
+            console.log(`${index + 1}. ${opcao}`);
+        });
+    }
 }
