@@ -13,8 +13,6 @@ export class Lanche extends Produto {
         return `Lanche`;
     }
     
-    public static mostrarTiposDisponiveis(): void {
-        Produto.mostrarOpcoes(["Hambúrguer", "Sanduíche", "Wrap"]);
-    }
+  
 
 }

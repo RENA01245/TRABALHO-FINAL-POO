@@ -2,44 +2,66 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Carrinho de Compras</title>
-  <style>
-    body {
-      font-family: Arial;
-      padding: 20px;
-    }
-    .produto {
-      margin-bottom: 10px;
-    }
-  </style>
+  <title>Carrinho Rubro-Negro</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
-  <h1>Carrinho de Compras</h1>
+  <header>
+    <h1>Carrinho Rubro-Negro</h1>
+  </header>
 
-  <div>
-    <label>Tipo:
-      <select id="tipo">
-        <option value="Lanche">Lanche</option>
-        <option value="Bebida">Bebida</option>
-        <option value="Sobremesa">Sobremesa</option>
-      </select>
-    </label>
-    <br>
-    <label id="nome-produto">Nome: <input type="text" id="nome" /></label>
-    <br>
-    <label id="preco-produto">Preço: <input type="number" id="preco" /></label>
-    <br>
-    <label id="extra-label"></label>
-    <input type="text" id="extra" style="display:none;" />
-    <br>
-    <button onclick="adicionarProduto()">Adicionar Produto</button>
-  </div>
+  <main>
+    <section>
+      <h2>Escolha um produto fixo</h2>
+      <div id="produtos-disponiveis" class="produtos-botoes"></div>
+    </section>
 
-  <h2>Produtos no Carrinho</h2>
-  <ul id="lista-produtos"></ul>
+    <hr />
 
-  <h3 id="total">Total: R$ 0.00</h3>
+    <section>
+      <h2>Adicionar produto personalizado</h2>
+      <form onsubmit="adicionarProduto(); return false;">
+        <label for="tipo">Tipo:</label>
+        <select id="tipo">
+          <option value="Lanche">Lanche</option>
+          <option value="Bebida">Bebida</option>
+          <option value="Sobremesa">Sobremesa</option>
+        </select>
+        <br />
 
-  <script type="module" src="dist/index.js"></script>
+        <label for="nome">Nome:</label>
+        <input type="text" id="nome" required />
+        <br />
+
+        <label for="preco">Preço:</label>
+        <input type="number" id="preco" min="0" step="0.01" required />
+        <br />
+
+        <label id="extra-label" for="extra"></label>
+        <input type="text" id="extra" style="display:none;" />
+        <br />
+
+        <button type="submit">Adicionar Produto</button>
+      </form>
+    </section>
+
+    <hr />
+
+    <section>
+      <h2>Produtos no Carrinho</h2>
+      <ul id="lista-produtos"></ul>
+      <h3 id="total">Total: R$ 0.00</h3>
+      <div class="cupom-area">
+        <input id="cupom" placeholder="Digite o cupom (Ex: MENGAO2025)" />
+        <button onclick="aplicarCupom()">Aplicar Cupom</button>
+        <span id="desconto-msg"></span>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast"></div>
+
+  <script type="module" src="../dist/index.js"></script>
 </body>
 </html>

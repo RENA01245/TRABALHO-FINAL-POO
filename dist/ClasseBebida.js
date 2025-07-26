@@ -1,16 +1,13 @@
 import { Produto } from "./ClasseProduto.js";
 export class Bebida extends Produto {
-    constructor(nome, preco, volume) {
+    constructor(nome, preco, tamanho) {
         super(nome, preco, "Bebida");
-        this.volume = volume;
+        this.tamanho = tamanho;
     }
     calcularPreco() {
-        return this.preco - (this.preco * 0.1);
+        return this.preco;
     }
     getInfo() {
-        return `Bebida - ${this.volume}L`;
-    }
-    static mostrarTiposDisponiveis() {
-        Produto.mostrarOpcoes(["Refrigerante", "Suco", "Água"]);
+        return `Bebida - Tamanho: ${this.tamanho}`;
     }
 }
