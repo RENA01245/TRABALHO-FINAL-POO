@@ -5,63 +5,79 @@
   <title>Carrinho Rubro-Negro</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-  <header>
+  <header class="bg-danger text-white text-center p-4">
     <h1>Carrinho Rubro-Negro</h1>
   </header>
 
-  <main>
+  <main class="container my-5">
+    <!-- Produtos fixos -->
     <section>
-      <h2>Escolha um produto fixo</h2>
-      <div id="produtos-disponiveis" class="produtos-botoes"></div>
+      <h2 class="mb-4">Escolha um produto fixo</h2>
+      <div id="produtos-disponiveis" class="row row-cols-1 row-cols-md-3 g-4"></div>
     </section>
 
-    <hr />
+    <hr class="my-5" />
 
+    <!-- Produto personalizado -->
+  <!-- Botão para abrir formulário -->
+<button class="btn btn-outline-light mb-3" onclick="alternarFormulario()">
+  ➕ Adicionar produto personalizado
+</button>
+
+<!-- Formulário personalizado -->
+<div id="formulario-personalizado" style="display: none;">
+  <form onsubmit="adicionarProduto(); return false;" class="row g-3">
+    <div class="col-md-4">
+      <label for="tipo" class="form-label">Tipo:</label>
+      <select id="tipo" class="form-select" onchange="atualizarCampoExtra()">
+        <option value="Lanche">Lanche</option>
+        <option value="Bebida">Bebida</option>
+        <option value="Sobremesa">Sobremesa</option>
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label for="nome" class="form-label">Nome:</label>
+      <input type="text" id="nome" class="form-control" required />
+    </div>
+
+    <div class="col-md-4">
+      <label for="preco" class="form-label">Preço:</label>
+      <input type="number" id="preco" class="form-control" min="0" step="0.01" required />
+    </div>
+
+    <div class="col-md-6">
+      <label id="extra-label" for="extra" class="form-label"></label>
+      <input type="text" id="extra" class="form-control" style="display: none;" />
+    </div>
+
+    <div class="col-12">
+      <button type="submit" class="btn btn-success">Adicionar Produto</button>
+    </div>
+  </form>
+</div>
+
+    <hr class="my-5" />
+
+    <!-- Carrinho -->
     <section>
-      <h2>Adicionar produto personalizado</h2>
-      <form onsubmit="adicionarProduto(); return false;">
-        <label for="tipo">Tipo:</label>
-        <select id="tipo">
-          <option value="Lanche">Lanche</option>
-          <option value="Bebida">Bebida</option>
-          <option value="Sobremesa">Sobremesa</option>
-        </select>
-        <br />
-
-        <label for="nome">Nome:</label>
-        <input type="text" id="nome" required />
-        <br />
-
-        <label for="preco">Preço:</label>
-        <input type="number" id="preco" min="0" step="0.01" required />
-        <br />
-
-        <label id="extra-label" for="extra"></label>
-        <input type="text" id="extra" style="display:none;" />
-        <br />
-
-        <button type="submit">Adicionar Produto</button>
-      </form>
-    </section>
-
-    <hr />
-
-    <section>
-      <h2>Produtos no Carrinho</h2>
-      <ul id="lista-produtos"></ul>
+      <h2 class="mb-4">Produtos no Carrinho</h2>
+      <ul id="lista-produtos" class="list-group mb-3"></ul>
       <h3 id="total">Total: R$ 0.00</h3>
-      <div class="cupom-area">
-        <input id="cupom" placeholder="Digite o cupom (Ex: MENGAO2025)" />
-        <button onclick="aplicarCupom()">Aplicar Cupom</button>
-        <span id="desconto-msg"></span>
+      <div class="input-group my-3">
+        <input id="cupom" class="form-control" placeholder="Digite o cupom (Ex: MENGAO2025)" />
+        <button class="btn btn-outline-primary" onclick="aplicarCupom()">Aplicar Cupom</button>
       </div>
+      <span id="desconto-msg" class="text-success"></span>
     </section>
   </main>
 
-  <div id="toast" class="toast"></div>
+  <div id="toast" class="toast position-fixed bottom-0 end-0 m-3" role="alert"></div>
 
   <script type="module" src="../dist/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
