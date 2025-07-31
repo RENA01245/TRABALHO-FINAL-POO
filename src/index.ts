@@ -16,11 +16,11 @@ const produtosDisponiveis = [
 
 const imagensPorNome: Record<string, string> = {
   "Hambúrguer": "https://cdn.pixabay.com/photo/2016/03/05/19/02/hamburger-1238246_1280.jpg",
-  "Sanduíche": "https://cdn.pixabay.com/photo/2016/04/24/17/48/sandwich-1341011_1280.jpg",
-  "Refrigerante": "https://cdn.pixabay.com/photo/2017/06/02/18/24/cola-2363138_1280.jpg",
-  "Suco": "https://cdn.pixabay.com/photo/2016/03/05/19/02/orange-juice-1234567_1280.jpg",
-  "Sorvete": "https://cdn.pixabay.com/photo/2015/04/08/13/13/ice-cream-712978_1280.jpg",
-  "Bolo": "https://cdn.pixabay.com/photo/2017/01/06/19/15/cake-1958416_1280.jpg"
+  "Sanduíche": "https://anamariabrogui.com.br/assets/uploads/receitas/fotos/usuario-2924-edf3bb46352945dee40f9358024adcf1.png",
+  "Refrigerante": "https://mercantilnovaera.vtexassets.com/arquivos/ids/206262/Refrigerante-COCA-COLA-Lata-350ml.jpg?v=638174264397000000",
+  "Suco": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBeOKhIsaieHnrgObbyP0tG6_ACyCpIPgD6g&s",
+  "Sorvete": "https://www.tecsoft.ind.br/wp-content/uploads/2023/12/cascao-sorvete-soft-2-sabores-alto-lucro-investimento.webp",
+  "Bolo": "https://moinhoglobo.com.br/wp-content/uploads/2019/03/08-bolo-chocolate-1024x683.png"
 };
 
 let cupomAtivo = false;
