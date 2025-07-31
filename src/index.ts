@@ -14,7 +14,6 @@ const produtosDisponiveis = [
   new Sobremesa("Bolo", 9, "Morango")
 ];
 
-// Mapa de imagens por nome do produto
 const imagensPorNome: Record<string, string> = {
   "Hambúrguer": "https://cdn.pixabay.com/photo/2016/03/05/19/02/hamburger-1238246_1280.jpg",
   "Sanduíche": "https://cdn.pixabay.com/photo/2016/04/24/17/48/sandwich-1341011_1280.jpg",
@@ -23,6 +22,8 @@ const imagensPorNome: Record<string, string> = {
   "Sorvete": "https://cdn.pixabay.com/photo/2015/04/08/13/13/ice-cream-712978_1280.jpg",
   "Bolo": "https://cdn.pixabay.com/photo/2017/01/06/19/15/cake-1958416_1280.jpg"
 };
+
+let cupomAtivo = false;
 
 function mostrarProdutosDisponiveis() {
   const div = document.getElementById("produtos-disponiveis")!;
@@ -66,11 +67,13 @@ function adicionarProdutoFixo(i: number) {
   const produto = produtosDisponiveis[i];
   carrinho.adicionarProduto(produto);
   atualizarCarrinho();
+  alert(`✅ Produto "${produto.getNome()}" adicionado com sucesso!`);
 }
 
 function atualizarCarrinho() {
   const lista = document.getElementById("lista-produtos")!;
   lista.innerHTML = "";
+
   // @ts-ignore
   carrinho["produtos"].forEach((produto, i) => {
     const li = document.createElement("li");
@@ -86,7 +89,10 @@ function atualizarCarrinho() {
     lista.appendChild(li);
   });
 
-  (document.getElementById("total") as HTMLElement).textContent = `Total: R$ ${carrinho.calcularTotal().toFixed(2)}`;
+  const totalElement = document.getElementById("total")!;
+  const total = carrinho.calcularTotal();
+  const totalFinal = cupomAtivo ? total * 0.9 : total;
+  totalElement.textContent = `Total: R$ ${totalFinal.toFixed(2)}`;
 }
 
 function adicionarProduto() {
@@ -106,8 +112,9 @@ function adicionarProduto() {
 
   carrinho.adicionarProduto(produto);
   atualizarCarrinho();
+  alert(`✅ Produto "${produto.getNome()}" adicionado com sucesso!`);
   limparCampos();
-  alternarFormulario(false); // Esconde o formulário após adicionar
+  alternarFormulario(false);
 }
 
 function removerProduto(indice: number) {
@@ -141,20 +148,39 @@ function atualizarCampoExtra() {
   }
 }
 
-// Função para mostrar ou esconder o formulário de produto personalizado
-function alternarFormulario(mostrar: boolean) {
-  const formulario = document.getElementById("formulario-produto-personalizado")!;
+function alternarFormulario(mostrar: boolean = true) {
+  const formulario = document.getElementById("formulario-personalizado") as HTMLElement;
   formulario.style.display = mostrar ? "block" : "none";
 }
 
-// Torna as funções globais para o HTML poder chamar
+function aplicarCupom() {
+  const input = document.getElementById("cupom") as HTMLInputElement;
+  const cupom = input.value.trim().toUpperCase();
+  const descontoMsg = document.getElementById("desconto-msg") as HTMLElement;
+
+  if (cupom === "MENGAO2025") {
+    cupomAtivo = true;
+    atualizarCarrinho();
+    descontoMsg.textContent = `Cupom aplicado com sucesso! Você ganhou 10% de desconto.`;
+    alert("✅ Cupom aplicado com sucesso!");
+  } else {
+    cupomAtivo = false;
+    descontoMsg.textContent = "Cupom inválido.";
+    alert("❌ Cupom inválido. Tente novamente.");
+  }
+}
+
+// Exportar para escopo global
 (window as any).adicionarProduto = adicionarProduto;
 (window as any).removerProduto = removerProduto;
 (window as any).adicionarProdutoFixo = adicionarProdutoFixo;
 (window as any).atualizarCampoExtra = atualizarCampoExtra;
 (window as any).alternarFormulario = alternarFormulario;
+(window as any).aplicarCupom = aplicarCupom;
 
-// Inicialização
-atualizarCampoExtra();
-mostrarProdutosDisponiveis();
-alternarFormulario(false); // Começa escondido
+document.addEventListener("DOMContentLoaded", () => {
+  atualizarCampoExtra();
+  mostrarProdutosDisponiveis();
+  alternarFormulario(false);
+  
+});
