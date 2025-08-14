@@ -6,18 +6,26 @@ const carrinho = new Carrinho();
 const produtosDisponiveis = [
     new Lanche("Hambúrguer", 15),
     new Lanche("Sanduíche", 12),
+    new Lanche("Cheeseburger", 17),
+    new Lanche("X-Bacon", 20),
     new Bebida("Refrigerante", 7, "500ml"),
     new Bebida("Suco", 8, "300ml"),
+    new Bebida("Água", 4, "500ml"),
     new Sobremesa("Sorvete", 10, "Chocolate"),
-    new Sobremesa("Bolo", 9, "Morango")
+    new Sobremesa("Bolo", 9, "Morango"),
+    new Sobremesa("Pudim", 8, "Leite Condensado")
 ];
 const imagensPorNome = {
-    "Hambúrguer": "https://cdn.pixabay.com/photo/2016/03/05/19/02/hamburger-1238246_1280.jpg",
-    "Sanduíche": "https://anamariabrogui.com.br/assets/uploads/receitas/fotos/usuario-2924-edf3bb46352945dee40f9358024adcf1.png",
-    "Refrigerante": "https://mercantilnovaera.vtexassets.com/arquivos/ids/206262/Refrigerante-COCA-COLA-Lata-350ml.jpg?v=638174264397000000",
-    "Suco": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBeOKhIsaieHnrgObbyP0tG6_ACyCpIPgD6g&s",
-    "Sorvete": "https://www.tecsoft.ind.br/wp-content/uploads/2023/12/cascao-sorvete-soft-2-sabores-alto-lucro-investimento.webp",
-    "Bolo": "https://moinhoglobo.com.br/wp-content/uploads/2019/03/08-bolo-chocolate-1024x683.png"
+    "Hambúrguer": "img/hamburguer.jpg",
+    "Sanduíche": "img/sanduiche.png",
+    "Cheeseburger": "img/cheeseburger.jpg",
+    "X-Bacon": "img/xbacon.jpg",
+    "Refrigerante": "img/refrigerante.jpg",
+    "Suco": "img/suco.jpg",
+    "Água": "img/agua.jpg",
+    "Sorvete": "img/sorvete.jpg",
+    "Bolo": "img/bolo.jpg",
+    "Pudim": "img/pudim.jpg"
 };
 let cupomAtivo = false;
 function mostrarProdutosDisponiveis() {
@@ -29,7 +37,7 @@ function mostrarProdutosDisponiveis() {
         const card = document.createElement("div");
         card.className = "card h-100 bg-dark text-white border-danger d-flex flex-column";
         const imagem = document.createElement("img");
-        imagem.src = imagensPorNome[produto.getNome()] || "https://via.placeholder.com/300x180?text=Imagem+Indisponivel";
+        imagem.src = imagensPorNome[produto.getNome()] || "img/placeholder.jpg";
         imagem.alt = produto.getNome();
         imagem.className = "card-img-top";
         const cardBody = document.createElement("div");
@@ -59,15 +67,42 @@ function adicionarProdutoFixo(i) {
 function atualizarCarrinho() {
     const lista = document.getElementById("lista-produtos");
     lista.innerHTML = "";
+    const produtosAgrupados = {};
+    // Agrupa por nome
     // @ts-ignore
-    carrinho["produtos"].forEach((produto, i) => {
+    carrinho["produtos"].forEach((produto) => {
+        const nome = produto.getNome();
+        if (!produtosAgrupados[nome]) {
+            produtosAgrupados[nome] = { produto, quantidade: 0 };
+        }
+        produtosAgrupados[nome].quantidade++;
+    });
+    Object.values(produtosAgrupados).forEach(({ produto, quantidade }) => {
         const li = document.createElement("li");
         li.className = "list-group-item d-flex justify-content-between align-items-center";
-        li.textContent = `${produto.getNome()} - ${produto.getInfo()} - R$ ${produto.calcularPreco().toFixed(2)}`;
+        // Imagem
+        const img = document.createElement("img");
+        img.src = imagensPorNome[produto.getNome()] || "img/placeholder.jpg";
+        img.alt = produto.getNome();
+        img.style.width = "60px";
+        img.style.height = "60px";
+        img.className = "me-3 rounded";
+        // Info + subtotal
+        const info = document.createElement("span");
+        const subtotal = produto.calcularPreco() * quantidade;
+        info.textContent = `${produto.getNome()} - ${produto.getInfo()} | Qtde: ${quantidade} | Subtotal: R$ ${subtotal.toFixed(2)}`;
+        // Botão remover
         const btn = document.createElement("button");
         btn.textContent = "Remover";
         btn.className = "btn btn-sm btn-outline-danger ms-2";
-        btn.onclick = () => removerProduto(i);
+        btn.onclick = () => {
+            for (let i = 0; i < quantidade; i++) {
+                carrinho.removerProduto(carrinho["produtos"].indexOf(produto));
+            }
+            atualizarCarrinho();
+        };
+        li.appendChild(img);
+        li.appendChild(info);
         li.appendChild(btn);
         lista.appendChild(li);
     });
