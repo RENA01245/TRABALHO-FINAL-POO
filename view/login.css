@@ -6,9 +6,16 @@ body {
   min-height: 100vh;
 }
 
+.login-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
 .login-container {
   max-width: 400px;
-  margin: 60px auto;
+  width: 100%;
   padding: 2rem 2rem 1.5rem 2rem;
   background: #fff;
   border-radius: 16px;
@@ -25,10 +32,15 @@ body {
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.2rem;
 }
 
-.login-form label {
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
   font-weight: 600;
   margin-bottom: 0.3rem;
   color: #222;
@@ -49,7 +61,7 @@ body {
   outline: none;
 }
 
-.login-form button[type="submit"] {
+.login-btn {
   background: #d90429;
   color: #fff;
   border: none;
@@ -61,11 +73,11 @@ body {
   transition: background 0.2s;
 }
 
-.login-form button[type="submit"]:hover {
+.login-btn:hover {
   background: #ff1744;
 }
 
-#login-erro {
+.login-form__error {
   color: #d90429;
   font-weight: 600;
   margin-top: 8px;
@@ -84,7 +96,7 @@ body {
     margin: 1rem;
   }
   .login-form input,
-  .login-form button {
+  .login-btn {
     font-size: 1rem;
     padding: 0.6rem;
   }
