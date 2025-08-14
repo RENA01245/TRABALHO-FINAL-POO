@@ -10,7 +10,11 @@
 <body>
   <header class="bg-danger text-white p-4 d-flex justify-content-between align-items-center">
     <h1 class="m-0">Zona do Sabor - 81</h1>
-    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Flamengo_braz_logo.svg" alt="Flamengo" class="logo-flamengo">
+    <div>
+      <!-- Botão alternar tema -->
+      <button id="alternar-tema" class="btn btn-outline-light me-2">🌙 Alternar Tema</button>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Flamengo_braz_logo.svg" alt="Flamengo" class="logo-flamengo">
+    </div>
   </header>
 
   <main class="container my-5">
@@ -18,6 +22,14 @@
     <button class="btn btn-outline-light mb-3" onclick="alternarFormulario()">
       ➕ Adicionar produto 
     </button>
+
+    <!-- Filtros -->
+    <div class="mb-4">
+      <button class="btn btn-outline-light" data-filter="all">Todos</button>
+      <button class="btn btn-outline-light" data-filter="Lanche">Lanches</button>
+      <button class="btn btn-outline-light" data-filter="Bebida">Bebidas</button>
+      <button class="btn btn-outline-light" data-filter="Sobremesa">Sobremesas</button>
+    </div>
 
     <!-- Produtos fixos -->
     <section>
@@ -27,8 +39,7 @@
 
     <hr class="my-5" />
 
-  
-
+    <!-- Formulário de produto personalizado -->
     <div id="formulario-personalizado" style="display: none;">
       <form onsubmit="adicionarProduto(); return false;" class="row g-3">
         <div class="col-md-4">
@@ -59,24 +70,31 @@
           <button type="submit" class="btn btn-success">Adicionar Produto</button>
         </div>
       </form>
-      
     </div>
 
+    <!-- Carrinho -->
     <section>
       <h2 class="mb-4">Finaliza Pedido</h2>
       <ul id="lista-produtos" class="list-group mb-3"></ul>
       <h3 id="total">Total: R$ 0.00</h3>
+
       <div class="input-group my-3">
         <input id="cupom" class="form-control" placeholder="Digite o cupom (Ex: MENGAO2025)" />
         <button class="btn btn-outline-primary" onclick="aplicarCupom()">Aplicar Cupom</button>
+        <!-- Botão para copiar cupom -->
+        <button id="copiar-cupom" class="btn btn-outline-secondary">Copiar</button>
       </div>
       <span id="desconto-msg" class="text-success"></span>
     </section>
-    <!-- Carrinho -->
 
   </main>
 
-  
+  <!-- Botão voltar ao topo -->
+  <button id="voltar-topo" 
+          style="display:none;position:fixed;bottom:20px;right:20px;z-index:9999;" 
+          class="btn btn-danger">
+    ↑ Topo
+  </button>
 
   <!-- Scripts -->
   <script type="module" src="../dist/index.js"></script>
