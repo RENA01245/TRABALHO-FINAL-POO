@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <div class="login-container" style="max-width:400px; margin:auto; padding-top:40px;">
+    <h2>Login</h2>
+    <form id="login-form" class="login-form">
+      <div class="mb-3">
+        <label for="usuario">Usuário</label>
+        <input id="usuario" type="text" maxlength="15" class="form-control" placeholder="Digite seu usuário">
+      </div>
+      <div class="mb-3">
+        <label for="senha">Senha</label>
+        <input id="senha" type="password" class="form-control" placeholder="Digite sua senha">
+      </div>
+      <button type="submit" class="btn btn-danger w-100">Entrar</button>
+      <div id="login-erro" style="color:#d90429; font-weight:600; margin-top:10px; display:none;"></div>
+    </form>
+  </div>
+  <script src="../dist/login.js"></script>
+</body>
+</html>

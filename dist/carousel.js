@@ -1,41 +1,72 @@
-"use strict";
-document.addEventListener("DOMContentLoaded", () => {
-    var _a, _b;
-    const slides = document.querySelectorAll(".carousel-slide");
-    const prevBtn = document.getElementById("prev-slide");
-    const nextBtn = document.getElementById("next-slide");
-    let current = 0;
-    let interval = setInterval(nextSlide, 5000);
-    function showSlide(index) {
-        slides.forEach((slide, i) => {
-            slide.style.display = i === index ? "block" : "none";
-        });
+export function iniciarCarousel(produtosDisponiveis, imagensPorNome, carrinho) {
+    const track = document.getElementById("carousel-track");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const slidesToShow = 3;
+    let currentIndex = 0;
+    let intervalId;
+    // Criar slides
+    produtosDisponiveis.forEach(prod => {
+        const slide = document.createElement("div");
+        slide.className = "carousel-slide";
+        const card = document.createElement("div");
+        card.className = "card bg-dark text-white border-danger";
+        const img = document.createElement("img");
+        img.src = imagensPorNome[prod.getNome()] || "img/placeholder.jpg";
+        img.alt = prod.getNome();
+        img.className = "card-img-top";
+        const cardBody = document.createElement("div");
+        cardBody.className = "card-body text-center";
+        cardBody.innerHTML = `
+      <h5 class="card-title">${prod.getNome()}</h5>
+      <p class="card-text">${prod.getInfo()}</p>
+      <p class="card-text fw-bold text-danger">R$ ${prod.calcularPreco().toFixed(2)}</p>
+    `;
+        const btn = document.createElement("button");
+        btn.textContent = "Adicionar";
+        btn.className = "btn btn-danger";
+        btn.onclick = () => {
+            carrinho.adicionarProduto(prod);
+            alert(`✅ Produto "${prod.getNome()}" adicionado!`);
+        };
+        cardBody.appendChild(btn);
+        card.appendChild(img);
+        card.appendChild(cardBody);
+        slide.appendChild(card);
+        track.appendChild(slide);
+    });
+    const slides = Array.from(track.children);
+    const totalSlides = slides.length;
+    // Atualizar posição do carousel
+    function atualizarCarousel() {
+        const slideWidth = slides[0].getBoundingClientRect().width + 20; // 20px gap
+        track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
     }
+    // Próximo slide
     function nextSlide() {
-        current = (current + 1) % slides.length;
-        showSlide(current);
+        currentIndex++;
+        if (currentIndex > totalSlides - slidesToShow)
+            currentIndex = 0;
+        atualizarCarousel();
     }
-    function prevSlideFunc() {
-        current = (current - 1 + slides.length) % slides.length;
-        showSlide(current);
+    // Slide anterior
+    function prevSlide() {
+        currentIndex--;
+        if (currentIndex < 0)
+            currentIndex = totalSlides - slidesToShow;
+        atualizarCarousel();
     }
-    prevBtn.addEventListener("click", () => {
-        prevSlideFunc();
-        resetInterval();
-    });
-    nextBtn.addEventListener("click", () => {
-        nextSlide();
-        resetInterval();
-    });
-    (_a = document.querySelector(".carousel-container")) === null || _a === void 0 ? void 0 : _a.addEventListener("mouseenter", () => {
-        clearInterval(interval);
-    });
-    (_b = document.querySelector(".carousel-container")) === null || _b === void 0 ? void 0 : _b.addEventListener("mouseleave", () => {
-        resetInterval();
-    });
-    function resetInterval() {
-        clearInterval(interval);
-        interval = setInterval(nextSlide, 5000);
+    // Iniciar autoplay
+    function startAutoPlay() {
+        clearInterval(intervalId);
+        intervalId = window.setInterval(nextSlide, 5000);
     }
-    showSlide(current);
-});
+    // Eventos botões
+    nextBtn.addEventListener("click", () => { nextSlide(); startAutoPlay(); });
+    prevBtn.addEventListener("click", () => { prevSlide(); startAutoPlay(); });
+    // Pausa inteligente no hover
+    track.parentElement.addEventListener("mouseenter", () => clearInterval(intervalId));
+    track.parentElement.addEventListener("mouseleave", startAutoPlay);
+    atualizarCarousel();
+    startAutoPlay();
+}
